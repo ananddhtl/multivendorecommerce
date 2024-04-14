@@ -54,14 +54,13 @@ class AuthController extends BaseApiController
 
             DB::commit();
 
-            return $this->sendResponse(['user' => new NormalUsersResource($user), 'token' => $token]);
+            return $this->sendResponse(['user' => $user, 'token' => $token]);
         } catch (\Exception $e) {
             dd($e->getMessage());
             DB::rollBack();
             return $this->sendError("Server Error. Please try again later.");
         }
     }
-
     public function login(LoginRequest $request)
     {
         try {
@@ -95,7 +94,7 @@ class AuthController extends BaseApiController
 
             $message = 'Login successful';
 
-            return $this->sendResponse(['user' => new NormalUsersResource($user), 'token' => $token], $message);
+            return $this->sendResponse(['user' => $user, 'token' => $token], $message);
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage());
         }
@@ -108,7 +107,7 @@ class AuthController extends BaseApiController
             $token->revoke();
             return $this->sendResponse([], "User logged out successfully.");
         } catch (\Exception $e) {
-            
+            dd($e->getMessage());
             return $this->sendError("Server Error. Please try again later.");
         }
     }
@@ -135,9 +134,10 @@ class AuthController extends BaseApiController
             $user->save();
 
             return $this->sendResponse([
-                'user' => new NormalUsersResource($user),
+                'user' => $user,
             ], "Password updated successfully");
         } catch (\Exception $e) {
+            dd($e->getMessage());
             return $this->sendError("Server Error. Please try again later.");
         }
     }
