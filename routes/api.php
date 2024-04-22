@@ -24,6 +24,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('forgot-password', [AuthController::class, 'forgotPassword']);
     Route::get('gethomepage', [HomeController::class, 'forhomepageapi']);
+    Route::get('productdesc/{id}', [HomeController::class, 'getproductdesc']);
    
     Route::middleware('api')->group(function () {
         Route::post('logout', [AuthController::class, 'logout']);

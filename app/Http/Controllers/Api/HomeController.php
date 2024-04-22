@@ -10,9 +10,19 @@ class HomeController extends BaseApiController
     {
         try {
           
-            $products = ProductModel::with('brand', 'subCategory')->get()->shuffle();
-    
+            $products = ProductModel::get()->shuffle();
+            return $this->sendResponse($products, 'Products fetched successfully!');
+        } catch (Exception $e) {
           
+            return $this->sendError('Something went wrong!');
+        }
+    }
+
+    public function getproductdesc($id)
+    {
+        try {
+          
+            $products = ProductModel::where('product_id', $id)->get();
             return $this->sendResponse($products, 'Products fetched successfully!');
         } catch (Exception $e) {
           
