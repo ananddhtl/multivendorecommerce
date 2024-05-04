@@ -32,9 +32,10 @@ Route::group(['prefix' => 'auth'], function () {
         Route::post('verify-otp', [AuthController::class, 'forgotOTPVerify']);
         Route::post('reset-password', [AuthController::class, 'resetPassword']);
 
+        Route::get('mycart', [HomeController::class, 'getCart']);
         Route::post('addtocart', [HomeController::class, 'addtocart']);
-        Route::post('update-cart-item', [HomeController::class, 'updateCartItem']);
-        Route::post('delete-cart-item', [HomeController::class, 'deleteCartItem']);
+        Route::post('updatecartitem', [HomeController::class, 'updateCartItem']);
+        Route::post('deletecartitem', [HomeController::class, 'deleteCartItem']);
 
     });
 });

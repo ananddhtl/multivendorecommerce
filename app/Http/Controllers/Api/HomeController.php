@@ -9,6 +9,28 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 class HomeController extends BaseApiController
 {
+
+    public function getCart()
+    {
+    try {
+        $carts = Cart::where('user_id', auth('api')->user()->id)
+                     ->with('items', 'items.product', 'items.product.image')
+                     ->withCount('items')
+                     ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => "User's Cart.",
+            'data' => $carts,
+        ], 200);
+    } catch (Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Something went wrong',
+            'error' => $e->getMessage(),
+        ], 500);
+    }
+    }
     public function forhomepageapi()
     {
         try {
@@ -111,7 +133,7 @@ class HomeController extends BaseApiController
             $item->delete();
 
             $cart = Cart::find($item->cart_id);
-            $product = Product::find($item->product_id);
+            $product = ProductModel::find($item->product_id);
 
             $cart->cart_total = $cart->cart_total - ($old_quantity * $product->price);
             $cart->save();
