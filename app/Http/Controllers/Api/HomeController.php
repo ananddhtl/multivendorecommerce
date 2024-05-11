@@ -12,9 +12,10 @@ use Illuminate\Support\Facades\DB;
 class HomeController extends BaseApiController
 {
 
-    public function getCart()
+    public function getCart(Request $request) 
     {
     try {
+       
         $carts = Cart::where('user_id', auth('api')->user()->id)
                      ->with('items', 'items.product', 'items.product.image')
                      ->withCount('items')
@@ -57,6 +58,7 @@ class HomeController extends BaseApiController
         }
     }
 
+  
     public function addToCart(Request $request)
     {
         try {
