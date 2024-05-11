@@ -37,5 +37,8 @@ Route::group(['prefix' => 'auth'], function () {
         Route::post('updatecartitem', [HomeController::class, 'updateCartItem']);
         Route::post('deletecartitem', [HomeController::class, 'deleteCartItem']);
 
+        Route::post('checkout', [HomeController::class, 'checkout']);
+        Route::get('orders', [HomeController::class, 'getOrders']);
+        Route::get('order-details', [HomeController::class, 'getOrderById']);
     });
 });
